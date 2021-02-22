@@ -2,11 +2,11 @@
 
 In this assignment you will be expected to write an API for connecting to a movie database
 
-## Assignments
+## Tasks
 
 For the backend part of this assignment, you are expected to write your code in the file `server.js`
 
-## Assignment 1 - Sample data
+## Task 1 - Sample data
 
 Before we can begin, we will load a sample dataset to work with.
 
@@ -35,7 +35,7 @@ After this, you should have some new databases / collections:
 
 We will be using the `sample_mflix` database.
 
-## Assignment 2 - Connect to your database
+## Task 2 - Connect to your database
 
 1. Use the dotenv package to load the process.env variables from your .env file
 
@@ -45,7 +45,7 @@ We will be using the `sample_mflix` database.
 
 3. Check the connection
 
-## Assignment 3 - Comments Schema & Model
+## Task 3 - Comments Schema & Model
 
 Unfortunately the sample datasets do not come with Models or Schemas, so we must build our own to interact with these databases / collections.
 
@@ -57,7 +57,7 @@ Unfortunately the sample datasets do not come with Models or Schemas, so we must
 
 > Hint: You may use `String`, `Date`, `Number`, `Boolean` as your data types
 
-## Assignment 4 - Movies Schema & Model
+## Task 4 - Movies Schema & Model
 
 Unfortunately the sample datasets do not come with Models or Schemas, so we must build our own to interact with these databases / collections.
 
@@ -69,7 +69,7 @@ Unfortunately the sample datasets do not come with Models or Schemas, so we must
 
 > Hint: You may use `String`, `Date`, `Number`, `Boolean` as your data types
 
-## Assignment 5 - 'Movies' by id endpoint
+## Task 5 - 'Movies' by id endpoint
 
 We will create an endpoint to load specific movie data, based on the movie id
 
@@ -81,7 +81,7 @@ We will create an endpoint to load specific movie data, based on the movie id
     - If found, return a status of `200` and the resulting movie
     - If not found, return a status of `404` and an appropriate message
     
-## Assignment 6 - 'Movies' search endpoint
+## Task 6 - 'Movies' search endpoint
 
 We will create an endpoint to search for movie data
 
@@ -96,7 +96,7 @@ We will create an endpoint to search for movie data
     - If found, return a status of `200` and the resulting movies
     - If not found, return a status of `404` and an appropriate message
 
-## Assignment 7 - 'Comments' endpoint
+## Task 7 - 'Comments' endpoint
 
 We will create an endpoint to load the comments data
 
@@ -108,7 +108,7 @@ We will create an endpoint to load the comments data
     - If found, return a status of `200` and the resulting comment
     - If not found, return a status of `404` and an appropriate message
     
-## Assignment 8 - Populating our comments
+## Task 8 - Populating our comments
 
 We will update our comments endpoint to return the populated movie data
 
