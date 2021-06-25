@@ -1,12 +1,44 @@
-# Node Movies Rest API
+# Mongoose Movies 🎥
 
 In this assignment you will be expected to write an API for connecting to a movie database
 
+This project assumes you've already had experience with:
+
+> - Mongoose Schemas
+> - Mongoose references
+> - Building routes and endpoints in Express
+
 ## Tasks
 
-For the backend part of this assignment, you are expected to write your code in the file `server.js`
+Before starting these tasks, run the command `npm install` or `npm i`
 
-## Task 1 - Sample data
+This will automatically install the following packages:
+- express
+- mongoose
+- dotenv
+
+## Task 1 - Write a .env file
+
+Note: For this assignment, we already assume you have a MongoDB server, and know how to access your credentials.
+
+1. Create a file in your root folder called `.env`. This file will contain all the connection information for accessing your database.
+
+2. Copy and paste the text in the file `.env.example`, into your `.env` file.
+
+3. For the key `DB_NAME`, choose anything you like. This will be the name of the database we will use (we will only use it for this project). All data we save in this assignment will go inside this database.
+
+   > Hint: The `DB_NAME` could be related to this assignment, for example `MONGOOSE_SCHEMA_ASSIGNMENT`
+
+4. For the other keys, fill in the details as provided to you by your MongoDB service.
+
+   - DB_HOST=
+   - DB_USER=
+   - DB_PASS=
+   - DB_NAME=
+
+   `mongodb+srv://<DB_USER>:<DB_PASS>@<DB_HOST>/<DB_NAME>?retryWrites=true&w=majority`
+
+## Task 2 - Sample data
 
 Before we can begin, we will load a sample dataset to work with.
 
@@ -35,29 +67,7 @@ After this, you should have some new databases / collections:
 
 We will be using the `sample_mflix` database.
 
-## Task 2 - Connect to your database
-
-1. Use the dotenv package to load the process.env variables from your .env file
-
-> Note: Connect to the `sample_mflix` database
-
-2. In the file `server.js`, connect to your server
-
-3. Check the connection
-
-## Task 3 - Comments Schema & Model
-
-Unfortunately the sample datasets do not come with Models or Schemas, so we must build our own to interact with these databases / collections.
-
-1. Using the MongoDB viewing tool (or another similar tool), examine the data in the `comments` collection. What MongoDB data types are being used?
-
-2. Create a `CommentSchema` schema for the collection `comments`
-
-3. Create a `CommentModel` model for the collection `comments`
-
-> Hint: You may use `String`, `Date`, `Number`, `Boolean` as your data types
-
-## Task 4 - Movies Schema & Model
+## Task 3 - Movies Schema & Model
 
 Unfortunately the sample datasets do not come with Models or Schemas, so we must build our own to interact with these databases / collections.
 
@@ -65,53 +75,103 @@ Unfortunately the sample datasets do not come with Models or Schemas, so we must
 
 2. Create a `MovieSchema` schema for the collection `movies`
 
-3. Create a `MovieModel` model for the collection `movies`
+3. Create a model `Movie` for your schema `MovieSchema`
 
 > Hint: You may use `String`, `Date`, `Number`, `Boolean` as your data types
 
-## Task 5 - 'Movies' by id endpoint
+## Task 4 - Comments Schema & Model
 
-We will create an endpoint to load specific movie data, based on the movie id
+Unfortunately the sample datasets do not come with Models or Schemas, so we must build our own to interact with these databases / collections.
 
-1. Create an endpoint `/movieById`. This will be a `get` endpoint. The endpoint should expect a parameter, the movie id.
+1. Using the MongoDB Compass viewing tool (or another similar tool), examine the data in the `comments` collection. What MongoDB data types are being used?
+
+2. Create a `CommentSchema` schema for the collection `comments`
+
+3. One of the fields you will see is `movie_id`. This is reference to another collection
+   - For this field, use the `ref` property, to link to the Movie collection
+   - For this field, use the `type` property to link to `mongoose.Schema.Types.ObjectId` (or similar)
+
+4. Create a model `Comment` for your schema `CommentSchema`
+
+> Hint: You may use `String`, `Date`, `Number`, `Boolean` as your data types
+
+## Task 5 - Creating the Movies route
+
+The `mflix` database has quite a few collections. We can imagine that if we were to fully develop our application, it could get quite big.
+
+Let's try and keep things organised from the start.
+
+Create a Route `movies`
+
+1. Create the file `movies.js` in the folder `Routes`
+   - import `express`
+   - create the `router` instance from `express.Router()`
+   - export your `router` instance
+   
+2. Import your route into `server.js`
+   - Use `app.use()` to use the movies router you imported
+   - Use the path `/movies`
+
+## Task 6 - Endpoint to search for movies by id
+
+We will create an endpoint to load specific movie data, based on the movie `id`
+
+1. Create an endpoint `/searchById` in your `movies` router. This will be a `get` endpoint. The endpoint should expect a parameter, the movie `id`.
 
 > Hint: In your endpoint callback you will need to use `request.params` to get the request parameters
 
-2. Use your `MoviesModel` to find the movie by id, then:
+2. Import and use your `Movies` model to find the movie by `id`, then:
     - If found, return a status of `200` and the resulting movie
     - If not found, return a status of `404` and an appropriate message
-    
-## Task 6 - 'Movies' search endpoint
+   
+> Hint: You can use the method `findById()`
+
+## Task 7 - Endpoint to search for movies by title
 
 We will create an endpoint to search for movie data
 
-1. Create an endpoint `/movieSearch`. This will be a `get` endpoint
+1. Create an endpoint `/searchByTitle` in your `movies` router. This will be a `get` endpoint
     - The endpoint should expect a parameter, the movie `title` to search by
     - The endpoint should expect a second parameter, the number of results to limit to search to
 
 > Hint: In your endpoint callback you will need to use `request.params` to get the request parameters
 
-2. Use your `MoviesModel` to find the movie by searching in the `title` field. It should:
+2. Use your `Movies` model to find the movie by searching in the `title` field. It should:
     - Limit the results using the `limit()` method. If no value is supplied, default to `10`
     - If found, return a status of `200` and the resulting movies
     - If not found, return a status of `404` and an appropriate message
 
-## Task 7 - 'Comments' endpoint
+> Hint: Here you must use the `find()` method
+
+## Task 8 - Creating the Comments route
+
+Create a Route `comments`
+
+1. Create the file `comments.js` in the folder `Routes`
+   - import `express`
+   - create the `router` instance from `express.Router()`
+   - export your `router` instance
+
+2. Import your route into `server.js`
+   - Use `app.use()` to use the comments router you imported
+   - Use the path `/comments`
+
+## Task 9 - Endpoint to search for comments by id
 
 We will create an endpoint to load the comments data
 
-1. Create an endpoint `/comments`. This will be a `get` endpoint. The endpoint should expect a parameter, the comment id.
+1. Create an endpoint `/searchById` in your `comments` router. This will be a `get` endpoint. The endpoint should expect a parameter, the comment `id`.
 
 > Hint: In your endpoint callback you will need to use `request.params` to get the request parameters
 
-2. Use your `CommentModel` to find the comment by id, then:
+2. Use your `Comment` model to find the comment by id, then:
     - If found, return a status of `200` and the resulting comment
     - If not found, return a status of `404` and an appropriate message
     
-## Task 8 - Populating our comments
+## Task 10 - Populating our comments
 
 We will update our comments endpoint to return the populated movie data
 
-1. Update the `/comments` endpoint to use the `populate()` method on the `movie_id` field.
+1. Update the `/searchById` endpoint to use the `populate()` method on the `movie_id` field.
 
-2. Test that your endpoint gives you the correct result.
+2. Test that your endpoint gives you the correct result
