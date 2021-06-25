@@ -38,7 +38,19 @@ Note: For this assignment, we already assume you have a MongoDB server, and know
 
    `mongodb+srv://<DB_USER>:<DB_PASS>@<DB_HOST>/<DB_NAME>?retryWrites=true&w=majority`
 
-## Task 2 - Sample data
+## Task 2 - Preparing our server to receive requests
+
+In the next tasks, we will create a REST API so that clients can connect and perform actions on our server. To do this, we must first begin with a few steps:
+
+1. Install the npm package `cors`
+
+2. Import and add `cors` to your middleware stack. This will prevent the dreaded same origin policy error in your browser.
+
+> Remember to run your middleware before any of your routes!
+
+3. Run `express.json()` as middleware. This will allow any JSON sent for example, with a POST request, to be correctly read by the server.
+
+## Task 3 - Sample data
 
 Before we can begin, we will load a sample dataset to work with.
 
@@ -67,7 +79,7 @@ After this, you should have some new databases / collections:
 
 We will be using the `sample_mflix` database.
 
-## Task 3 - Movies Schema & Model
+## Task 4 - Movies Schema & Model
 
 Unfortunately the sample datasets do not come with Models or Schemas, so we must build our own to interact with these databases / collections.
 
@@ -79,7 +91,9 @@ Unfortunately the sample datasets do not come with Models or Schemas, so we must
 
 > Hint: You may use `String`, `Date`, `Number`, `Boolean` as your data types
 
-## Task 4 - Comments Schema & Model
+> Hint: Some values maybe held inside an array, for example a string of arrays would be represented as `[String]`
+
+## Task 5 - Comments Schema & Model
 
 Unfortunately the sample datasets do not come with Models or Schemas, so we must build our own to interact with these databases / collections.
 
@@ -95,7 +109,7 @@ Unfortunately the sample datasets do not come with Models or Schemas, so we must
 
 > Hint: You may use `String`, `Date`, `Number`, `Boolean` as your data types
 
-## Task 5 - Creating the Movies route
+## Task 6 - Creating the Movies route
 
 The `mflix` database has quite a few collections. We can imagine that if we were to fully develop our application, it could get quite big.
 
@@ -112,38 +126,38 @@ Create a Route `movies`
    - Use `app.use()` to use the movies router you imported
    - Use the path `/movies`
 
-## Task 6 - Endpoint to search for movies by id
+## Task 7 - Endpoint to search for movies by id
 
 We will create an endpoint to load specific movie data, based on the movie `id`
 
-1. Create an endpoint `/searchById` in your `movies` router. This will be a `get` endpoint. The endpoint should expect a parameter, the movie `id`.
+1. Create an endpoint `/searchById` in your `movies` router. This will be a `GET` endpoint. The endpoint should expect a parameter, the movie `id`.
 
 > Hint: In your endpoint callback you will need to use `request.params` to get the request parameters
 
-2. Import and use your `Movies` model to find the movie by `id`, then:
+2. Import and use your `Movie` model to find the movie by `id`, then:
     - If found, return a status of `200` and the resulting movie
     - If not found, return a status of `404` and an appropriate message
    
 > Hint: You can use the method `findById()`
 
-## Task 7 - Endpoint to search for movies by title
+## Task 8 - Endpoint to search for movies by title
 
 We will create an endpoint to search for movie data
 
-1. Create an endpoint `/searchByTitle` in your `movies` router. This will be a `get` endpoint
+1. Create an endpoint `/searchByTitle` in your `movies` router. This will be a `GET` endpoint
     - The endpoint should expect a parameter, the movie `title` to search by
     - The endpoint should expect a second parameter, the number of results to limit to search to
 
 > Hint: In your endpoint callback you will need to use `request.params` to get the request parameters
 
-2. Use your `Movies` model to find the movie by searching in the `title` field. It should:
+2. Use your `Movie` model to find the movie by searching in the `title` field. It should:
     - Limit the results using the `limit()` method. If no value is supplied, default to `10`
     - If found, return a status of `200` and the resulting movies
     - If not found, return a status of `404` and an appropriate message
 
 > Hint: Here you must use the `find()` method
 
-## Task 8 - Creating the Comments route
+## Task 9 - Creating the Comments route
 
 Create a Route `comments`
 
@@ -156,19 +170,79 @@ Create a Route `comments`
    - Use `app.use()` to use the comments router you imported
    - Use the path `/comments`
 
-## Task 9 - Endpoint to search for comments by id
+## Task 10 - Endpoint to search for comments by id
 
 We will create an endpoint to load the comments data
 
-1. Create an endpoint `/searchById` in your `comments` router. This will be a `get` endpoint. The endpoint should expect a parameter, the comment `id`.
+1. Create an endpoint `/searchById` in your `comments` router. This will be a `GET` endpoint. The endpoint should expect a parameter, the comment `id`.
 
 > Hint: In your endpoint callback you will need to use `request.params` to get the request parameters
 
 2. Use your `Comment` model to find the comment by id, then:
     - If found, return a status of `200` and the resulting comment
     - If not found, return a status of `404` and an appropriate message
-    
-## Task 10 - Populating our comments
+   
+## Task 11 - Endpoint to search and update movies by id
+
+We would like to satisfy the U in the CRUD criteria
+
+We will create an endpoint to update specific movie data, based on the movie `id`
+
+1. Create an endpoint `/update` in your `movies` router. This will be a `POST` endpoint.
+   - The endpoint should expect a parameter, the movie `id`
+      > Hint: In your endpoint callback you will need to use `request.params` to get the request parameters
+   - The endpoint should expect a JSON object with details to update the movie document
+      > Hint: In your endpoint callback you will need to use `request.body` to get the request parameters
+
+2. Use your `Movie` model to find the movie by `id`, then:
+   - If found, return a status of `200` and the resulting movie
+   - If not found, return a status of `404` and an appropriate message
+
+> Hint: You can use the method `findByIdAndUpdate()`
+
+## Task 12 - Endpoint to search and update comments by id
+
+We will create an endpoint to update specific comment text, based on the comment `id`
+
+Do not allow the user to update any other details, other than the text!
+
+1. Create an endpoint `/update` in your `comments` router. This will be a `POST` endpoint.
+   - The endpoint should expect a parameter, the comment `id`
+   - The endpoint should expect a JSON object with 1 property, the new text to update the comment
+
+2. Use your `Comment` model to find the movie by `id`, then:
+   - If found, return a status of `200` and the resulting updated comment text
+   - If not found, return a status of `404` and an appropriate message
+
+> Hint: You can use the method `findByIdAndUpdate()`
+
+## Task 13 - Endpoint to search and delete movies by id
+
+We will create an endpoint to search for and delete a movie based on the movie `id`
+
+1. Create an endpoint `/delete` in your `movies` router. This will be a `DELETE` endpoint. The endpoint should expect a parameter, the movie `id`.
+
+2. Use your `Movie` model to find the movie by `id`, then:
+   - If found, return a status of `200` and an appropriate message
+   - If not found, return a status of `404` and an appropriate message
+   
+> Hint: You can use the method `findByIdAndDelete()`
+
+## Task 14 - Endpoint to search and delete comments by id
+
+We will create an endpoint to search for and delete a comment based on the comment `id`
+
+1. Create an endpoint `/delete` in your `movies` router. This will be a `DELETE` endpoint. The endpoint should expect a parameter, the comment `id`.
+
+2. Use your `Comment` model to find the comment by `id`, then:
+   - If found, return a status of `200` and an appropriate message
+   - If not found, return a status of `404` and an appropriate message
+
+> Hint: You can use the method `findByIdAndDelete()`
+
+## Task 15 - Populating our comments
+
+Our `comments` collection uses a reference to get data from the `movies` collection.
 
 We will update our comments endpoint to return the populated movie data
 
