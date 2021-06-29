@@ -17,40 +17,7 @@ This will automatically install the following packages:
 - mongoose
 - dotenv
 
-## Task 1 - Write a .env file
-
-Note: For this assignment, we already assume you have a MongoDB server, and know how to access your credentials.
-
-1. Create a file in your root folder called `.env`. This file will contain all the connection information for accessing your database.
-
-2. Copy and paste the text in the file `.env.example`, into your `.env` file.
-
-3. For the key `DB_NAME`, choose anything you like. This will be the name of the database we will use (we will only use it for this project). All data we save in this assignment will go inside this database.
-
-   > Hint: The `DB_NAME` could be related to this assignment, for example `MONGOOSE_SCHEMA_ASSIGNMENT`
-
-4. For the other keys, fill in the details as provided to you by your MongoDB service.
-
-   - DB_HOST=
-   - DB_USER=
-   - DB_PASS=
-   - DB_NAME=
-
-   `mongodb+srv://<DB_USER>:<DB_PASS>@<DB_HOST>/<DB_NAME>?retryWrites=true&w=majority`
-
-## Task 2 - Preparing our server to receive requests
-
-In the next tasks, we will create a REST API so that clients can connect and perform actions on our server. To do this, we must first begin with a few steps:
-
-1. Install the npm package `cors`
-
-2. Import and add `cors` to your middleware stack. This will prevent the dreaded same origin policy error in your browser.
-
-> Remember to run your middleware before any of your routes!
-
-3. Run `express.json()` as middleware. This will allow any JSON sent for example, with a POST request, to be correctly read by the server.
-
-## Task 3 - Sample data
+## Task 1 - Sample data
 
 Before we can begin, we will load a sample dataset to work with.
 
@@ -78,6 +45,37 @@ After this, you should have some new databases / collections:
 > sample_weatherdata
 
 We will be using the `sample_mflix` database.
+
+## Task 2 - Write a .env file
+
+Note: For this assignment, we already assume you have a MongoDB server, and know how to access your credentials.
+
+1. Create a file in your root folder called `.env`. This file will contain all the connection information for accessing your database.
+
+2. Copy and paste the text in the file `.env.example`, into your `.env` file.
+
+3. For the key `DB_NAME`, choose use `sample_mflix`. This will ensure that Mongoose will try and use the existing sample dataset you previously set up
+
+4. For the other keys, fill in the details as provided to you by your MongoDB service.
+
+   - DB_HOST=
+   - DB_USER=
+   - DB_PASS=
+   - DB_NAME=
+
+   `mongodb+srv://<DB_USER>:<DB_PASS>@<DB_HOST>/<DB_NAME>?retryWrites=true&w=majority`
+
+## Task 3 - Preparing our server to receive requests
+
+In the next tasks, we will create a REST API so that clients can connect and perform actions on our server. To do this, we must first begin with a few steps:
+
+1. Install the npm package `cors`
+
+2. Import and add `cors` to your middleware stack. This will prevent the dreaded same origin policy error in your browser.
+
+> Remember to run your middleware before any of your routes!
+
+3. Run `express.json()` as middleware. This will allow any JSON sent for example, with a POST request, to be correctly read by the server.
 
 ## Task 4 - Movies Schema & Model
 
